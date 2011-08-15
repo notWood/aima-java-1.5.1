@@ -61,7 +61,7 @@ public class RouteFindingAgentApp extends SimpleAgentApp {
 				"to Bucharest", "to Eforie", "to Neamt",
 				"to Random" };
 		private static String[] AUSTRALIA_DESTS = new String[] {
-				"to Port Hedland", "to Albany", "to Melbourne",
+				"to Port Hedland", "to Albany", "to Melbourne", "to Perth",
 				"to Random" };
 
 		/** Creates a new frame. */
@@ -71,6 +71,7 @@ public class RouteFindingAgentApp extends SimpleAgentApp {
 					"Romania, from Arad", "Romania, from Lugoj",
 					"Romania, from Fagaras",
 					"Australia, from Sydney",
+					"Australia, from Gold Coast",
 					"Australia, from Random" }, 0);
 			setSelectorItems(SEARCH_MODE_SEL, SearchFactory.getInstance()
 					.getSearchModeNames(), 1); // change the default!
@@ -136,6 +137,10 @@ public class RouteFindingAgentApp extends SimpleAgentApp {
 				break;
 			case 4:
 				SimplifiedRoadMapOfAustralia.initMap(map);
+				agentLoc = SimplifiedRoadMapOfAustralia.GOLD_COAST;
+				break;
+			case 5:
+				SimplifiedRoadMapOfAustralia.initMap(map);
 				agentLoc = map.randomlyGenerateDestination();
 				break;
 			}
@@ -170,6 +175,9 @@ public class RouteFindingAgentApp extends SimpleAgentApp {
 					destinations.add(SimplifiedRoadMapOfAustralia.MELBOURNE);
 					break;
 				case 3:
+					destinations.add(SimplifiedRoadMapOfAustralia.PERTH);
+					break;
+				case 4:
 					destinations.add(map.randomlyGenerateDestination());
 					break;
 				}

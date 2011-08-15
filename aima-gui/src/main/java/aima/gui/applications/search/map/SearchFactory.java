@@ -12,6 +12,7 @@ import aima.core.search.informed.RecursiveBestFirstSearch;
 import aima.core.search.local.HillClimbingSearch;
 import aima.core.search.uninformed.BreadthFirstSearch;
 import aima.core.search.uninformed.DepthFirstSearch;
+import aima.core.search.uninformed.DepthLimitedSearch;
 import aima.core.search.uninformed.IterativeDeepeningSearch;
 import aima.core.search.uninformed.UniformCostSearch;
 
@@ -20,6 +21,8 @@ import aima.core.search.uninformed.UniformCostSearch;
  * @author Ruediger Lunde
  */
 public class SearchFactory {
+	
+	public final static int DEPTH_LIMIT = 10;
 
 	/** Search strategy: Depth first search. */
 	public final static int DF_SEARCH = 0;
@@ -37,6 +40,8 @@ public class SearchFactory {
 	public final static int RBF_SEARCH = 6;
 	/** Search strategy: Hill climbing search. */
 	public final static int HILL_SEARCH = 7;
+	/** Search strategy: Depth Limited search. */
+	public final static int DEPTH_LIMITED = 8;
 
 	/** Search mode: tree search. */
 	public final static int TREE_SEARCH = 0;
@@ -65,7 +70,7 @@ public class SearchFactory {
 	public String[] getSearchStrategyNames() {
 		return new String[] { "Depth First", "Breadth First",
 				"Iterative Deepening", "Uniform Cost", "Greedy Best First",
-				"A*", "Recursive Best First", "Hill Climbing" };
+				"A*", "Recursive Best First", "Hill Climbing", "Depth Limited" };
 	}
 
 	/**
@@ -121,6 +126,9 @@ public class SearchFactory {
 			break;
 		case HILL_SEARCH:
 			result = new HillClimbingSearch(hf);
+			break;
+		case DEPTH_LIMITED:
+			result = new DepthLimitedSearch(DEPTH_LIMIT);
 			break;
 		}
 		return result;

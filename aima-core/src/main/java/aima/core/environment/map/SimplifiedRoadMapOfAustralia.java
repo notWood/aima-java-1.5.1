@@ -30,6 +30,7 @@ public class SimplifiedRoadMapOfAustralia extends ExtendableMap {
 	public static final String DUBBO = "Dubbo";
 	public static final String ESPERANCE = "Esperance";
 	public static final String GERALDTON = "Geraldton";
+	public static final String GOLD_COAST = "GoldCoast";
 	public static final String HALLS_CREEK = "HallsCreek";
 	public static final String HAY = "Hay";
 	public static final String KALGOORLIE = "Kalgoorlie";
@@ -100,9 +101,15 @@ public class SimplifiedRoadMapOfAustralia extends ExtendableMap {
 		map.addBidirectionalLink(NYNGAN, DUBBO, 166.0);
 		map.addBidirectionalLink(DUBBO, BRISBANE, 860.0);
 		map.addBidirectionalLink(DUBBO, SYDNEY, 466.0);
-		map.addBidirectionalLink(BRISBANE, TAMWORTH, 576.0);
-		map.addBidirectionalLink(BRISBANE, PORT_MACQUARIE, 555.0);
+		
+		//map.addBidirectionalLink(BRISBANE, TAMWORTH, 576.0);
+		//map.addBidirectionalLink(BRISBANE, PORT_MACQUARIE, 555.0);
 		map.addBidirectionalLink(PORT_MACQUARIE, NEWCASTLE, 245.0);
+		
+		map.addBidirectionalLink(BRISBANE, GOLD_COAST, 78.0); // 
+		map.addBidirectionalLink(GOLD_COAST, TAMWORTH, 579.0); //
+		map.addBidirectionalLink(GOLD_COAST, PORT_MACQUARIE, 475.0);
+		
 		map.addBidirectionalLink(TAMWORTH, NEWCASTLE, 284.0);
 		map.addBidirectionalLink(NEWCASTLE, SYDNEY, 159.0);
 		map.addBidirectionalLink(SYDNEY, CANBERRA, 287.0);
@@ -140,6 +147,7 @@ public class SimplifiedRoadMapOfAustralia extends ExtendableMap {
 		map.setPosition(DUBBO, 1474, 881);
 		map.setPosition(ESPERANCE, -1182, 1132);
 		map.setPosition(GERALDTON, -1958, 405);
+		map.setPosition(GOLD_COAST, 1887, 530);
 		map.setPosition(HALLS_CREEK, -630, -624);
 		map.setPosition(HAY, 985, 1143);
 		map.setPosition(KALGOORLIE, -1187, 729);
