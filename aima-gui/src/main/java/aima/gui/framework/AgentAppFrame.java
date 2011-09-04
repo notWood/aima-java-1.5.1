@@ -247,8 +247,6 @@ public class AgentAppFrame extends JFrame {
 		pauseButton.setEnabled(!b);
 		stepButton.setEnabled(prep);
 		cancelButton.setEnabled(!b);
-		for (JComboBox combo : selectors.combos)
-			combo.setEnabled(b);
 	}
 
 	/** Tells the controller to prepare simulation and updates enabled state. */
