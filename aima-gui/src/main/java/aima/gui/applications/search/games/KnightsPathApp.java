@@ -8,9 +8,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
-
 import javax.swing.JButton;
 
 import aima.core.agent.Action;
@@ -19,6 +19,7 @@ import aima.core.agent.Environment;
 import aima.core.agent.EnvironmentState;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractEnvironment;
+import aima.core.environment.knightspath.EuclideanHeuristic;
 import aima.core.environment.knightspath.ManhattanHeuristic;
 import aima.core.environment.knightspath.KnightsPathBoard;
 import aima.core.environment.knightspath.KnightsPathFunctionFactory;
@@ -29,15 +30,7 @@ import aima.core.search.framework.GraphSearch;
 import aima.core.search.framework.Problem;
 import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchAgent;
-import aima.core.search.framework.TreeSearch;
 import aima.core.search.informed.AStarSearch;
-import aima.core.search.local.HillClimbingSearch;
-import aima.core.search.local.Scheduler;
-import aima.core.search.local.SimulatedAnnealingSearch;
-import aima.core.search.uninformed.BreadthFirstSearch;
-import aima.core.search.uninformed.DepthFirstSearch;
-import aima.core.search.uninformed.DepthLimitedSearch;
-import aima.core.search.uninformed.IterativeDeepeningSearch;
 import aima.core.util.datastructure.XYLocation;
 import aima.gui.framework.AgentAppController;
 import aima.gui.framework.AgentAppEnvironmentView;
@@ -71,6 +64,9 @@ public class KnightsPathApp extends SimpleAgentApp {
 		addSearchAlgorithm("A* search (Manhattan Distance heuristic)",
 				new AStarSearch(new GraphSearch(),
 						new ManhattanHeuristic()));
+		addSearchAlgorithm("A* search (Euclidean Distance heuristic)",
+				new AStarSearch(new GraphSearch(),
+						new EuclideanHeuristic()));
 	}
 
 	/** Returns a <code>KnightsPathView</code> instance. */
@@ -130,6 +126,7 @@ public class KnightsPathApp extends SimpleAgentApp {
 		private static final long serialVersionUID = 1L;
 		protected JButton[] squareButtons;
 		protected int currSize = -1;
+		
 
 		protected KnightsPathView() {
 		}
@@ -196,15 +193,19 @@ public class KnightsPathApp extends SimpleAgentApp {
 				goalSquare.setText("G");
 			}
 			
-			if(board.getKnightCurrentPosition() != null){
-				JButton kSquare = squareButtons[board.getKnightCurrentPosition().getXCoOrdinate() + board.getKnightCurrentPosition().getYCoOrdinate() * currSize];
-				kSquare.setForeground(Color.BLACK);
-				kSquare.setFont(f);
-				kSquare.setText("K");
+			for (XYLocation locationVisited : board.getLocationsVisited()) {
+				if(locationVisited.getXCoOrdinate() == board.getKnightGoalPosition().getXCoOrdinate() && locationVisited.getYCoOrdinate() == board.getKnightGoalPosition().getYCoOrdinate()){
+					JButton goalSquare = squareButtons[board.getKnightGoalPosition().getXCoOrdinate() + board.getKnightGoalPosition().getYCoOrdinate() * currSize];
+					goalSquare.setForeground(Color.BLACK);
+					goalSquare.setFont(f);
+					goalSquare.setText("G");
+				}else{
+					JButton kSquare = squareButtons[locationVisited.getXCoOrdinate() + locationVisited.getYCoOrdinate() * currSize];
+					kSquare.setForeground(Color.BLACK);
+					kSquare.setFont(f);
+					kSquare.setText("K");
+				}
 			}
-			
-			
-
 			
 			validate();
 		}

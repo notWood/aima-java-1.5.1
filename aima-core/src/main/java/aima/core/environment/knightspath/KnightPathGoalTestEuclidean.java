@@ -8,12 +8,11 @@ import aima.core.search.framework.GoalTest;
  * @author R. Lunde
  * @author J. Navas
  */
-public class KnightsPathGoalTest implements GoalTest {
-
+public class KnightPathGoalTestEuclidean implements GoalTest {
 	public boolean isGoalState(Object state) {
 		KnightsPathBoard board = (KnightsPathBoard) state;
 
-		return  board.getDistance() == 0;
+		return  board.getDistance("euclidean") == 0;
 
 	}
 }

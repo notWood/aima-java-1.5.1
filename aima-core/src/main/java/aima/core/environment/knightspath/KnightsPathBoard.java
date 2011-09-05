@@ -1,6 +1,8 @@
 package aima.core.environment.knightspath;
 
 
+import java.util.LinkedList;
+
 import aima.core.util.datastructure.XYLocation;
 
 /**
@@ -22,11 +24,14 @@ public class KnightsPathBoard {
 	XYLocation _knightCurrentPosition;
 	XYLocation _knightStartPosition;
 	XYLocation _KnightGoalPosition;
+	
+	private LinkedList<XYLocation> locationsVisited;
 
 	int size;
 
 	
 	public KnightsPathBoard(int n) {
+		locationsVisited = new LinkedList<XYLocation>();
 		size = n;
 		squares = new int[size][size];
 		for (int i = 0; i < size; i++) {
@@ -57,6 +62,7 @@ public class KnightsPathBoard {
 	/* set the knight current location*/
 	public void addKnightAt(XYLocation l) {
 		_knightCurrentPosition = l;
+		locationsVisited.add(l);
 	}
 	
 	/* Set the knight starting location */
@@ -85,9 +91,25 @@ public class KnightsPathBoard {
 		return _KnightGoalPosition;
 	}
 	
+	public LinkedList<XYLocation> getLocationsVisited(){
+		return locationsVisited;
+	}
+	
 	
 	public double getDistance(){
 		return getManhattanDistance();
+	}
+	
+	public double getDistance(String heuristic){
+		
+		String h = heuristic.toLowerCase().trim();
+		
+		if(h == "manhattan")
+			return getManhattanDistance();
+		else if(h == "euclidean")
+			return getEuclideanDistance();
+		else
+			return getManhattanDistance();
 	}
 	
 	/* Determines the distance between the knight position and the goal position */
@@ -104,7 +126,15 @@ public class KnightsPathBoard {
 	    return z;
 	}
 	
-
+	public double getEuclideanDistance(){
+		
+		int cx = getKnightCurrentPosition().getXCoOrdinate();
+		int cy = getKnightCurrentPosition().getYCoOrdinate();
+		int gx = getKnightGoalPosition().getXCoOrdinate();
+		int gy = getKnightGoalPosition().getYCoOrdinate();
+		
+		return Math.sqrt(( Math.pow(cx - gx, 2) + Math.pow(cy - gy, 2))); 
+	}
 
 	@Override
 	public boolean equals(Object o) {

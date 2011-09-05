@@ -9,10 +9,10 @@ import aima.core.search.framework.HeuristicFunction;
  * @author R. Lunde
  * @author J. Navas
  */
-public class ManhattanHeuristic implements HeuristicFunction {
+public class EuclideanHeuristic implements HeuristicFunction {
 
 	public double h(Object state) {
 		KnightsPathBoard board = (KnightsPathBoard) state;
-		return board.getDistance();
+		return board.getDistance("euclidean");
 	}
 }
