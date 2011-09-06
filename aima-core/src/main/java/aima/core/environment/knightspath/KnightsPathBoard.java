@@ -108,6 +108,8 @@ public class KnightsPathBoard {
 			return getManhattanDistance();
 		else if(h == "euclidean")
 			return getEuclideanDistance();
+		else if(h == "diagonal")
+			return getDiagonalDistance();
 		else
 			return getManhattanDistance();
 	}
@@ -134,6 +136,19 @@ public class KnightsPathBoard {
 		int gy = getKnightGoalPosition().getYCoOrdinate();
 		
 		return Math.sqrt(( Math.pow(cx - gx, 2) + Math.pow(cy - gy, 2))); 
+	}
+	
+	public double getDiagonalDistance(){
+		
+		int cx = getKnightCurrentPosition().getXCoOrdinate();
+		int cy = getKnightCurrentPosition().getYCoOrdinate();
+		int gx = getKnightGoalPosition().getXCoOrdinate();
+		int gy = getKnightGoalPosition().getYCoOrdinate();
+		
+		int x = Math.abs(cx-gx);
+	    int y = Math.abs(cy-gy);
+	    int z = Math.max(x,y);
+	    return z;
 	}
 
 	@Override

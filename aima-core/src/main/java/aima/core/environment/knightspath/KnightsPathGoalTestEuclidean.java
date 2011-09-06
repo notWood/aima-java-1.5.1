@@ -8,7 +8,7 @@ import aima.core.search.framework.GoalTest;
  * @author R. Lunde
  * @author J. Navas
  */
-public class KnightPathGoalTestEuclidean implements GoalTest {
+public class KnightsPathGoalTestEuclidean implements GoalTest {
 	public boolean isGoalState(Object state) {
 		KnightsPathBoard board = (KnightsPathBoard) state;
 

@@ -19,13 +19,17 @@ import aima.core.agent.Environment;
 import aima.core.agent.EnvironmentState;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractEnvironment;
+import aima.core.environment.knightspath.DiagonalHeuristic;
 import aima.core.environment.knightspath.EuclideanHeuristic;
+import aima.core.environment.knightspath.KnightsPathGoalTestDiagonal;
+import aima.core.environment.knightspath.KnightsPathGoalTestEuclidean;
 import aima.core.environment.knightspath.ManhattanHeuristic;
 import aima.core.environment.knightspath.KnightsPathBoard;
 import aima.core.environment.knightspath.KnightsPathFunctionFactory;
 import aima.core.environment.knightspath.KnightsPathGoalTest;
 import aima.core.environment.knightspath.KnightsPathAction;
 import aima.core.search.framework.ActionsFunction;
+import aima.core.search.framework.GoalTest;
 import aima.core.search.framework.GraphSearch;
 import aima.core.search.framework.Problem;
 import aima.core.search.framework.Search;
@@ -67,6 +71,9 @@ public class KnightsPathApp extends SimpleAgentApp {
 		addSearchAlgorithm("A* search (Euclidean Distance heuristic)",
 				new AStarSearch(new GraphSearch(),
 						new EuclideanHeuristic()));
+		addSearchAlgorithm("A* search (Diagonal Distance heuristic)",
+				new AStarSearch(new GraphSearch(),
+						new DiagonalHeuristic()));
 	}
 
 	/** Returns a <code>KnightsPathView</code> instance. */
@@ -110,7 +117,7 @@ public class KnightsPathApp extends SimpleAgentApp {
 		public KnightsPathFrame() {
 			setTitle("Knight's Path Application");
 			setSelectors(new String[] { ENV_SEL, SEARCH_SEL }, new String[] { "Select Environment","Select Search" });
-			setSelectorItems(ENV_SEL, new String[] { "6 KnightsPath", "8 KnightsPath","10 KnightsPath", "12 KnightsPath" }, 0);			
+			setSelectorItems(ENV_SEL, new String[] { "4 KnightsPath", "6 KnightsPath", "8 KnightsPath","10 KnightsPath", "12 KnightsPath"}, 0);			
 			setSelectorItems(SEARCH_SEL, (String[]) SEARCH_NAMES.toArray(new String[] {}), 0);
 			setEnvView(new KnightsPathView());
 			setSize(800, 600);
@@ -193,7 +200,7 @@ public class KnightsPathApp extends SimpleAgentApp {
 				goalSquare.setText("G");
 			}
 			
-			for (XYLocation locationVisited : board.getLocationsVisited()) {
+			/*for (XYLocation locationVisited : board.getLocationsVisited()) {
 				if(locationVisited.getXCoOrdinate() == board.getKnightGoalPosition().getXCoOrdinate() && locationVisited.getYCoOrdinate() == board.getKnightGoalPosition().getYCoOrdinate()){
 					JButton goalSquare = squareButtons[board.getKnightGoalPosition().getXCoOrdinate() + board.getKnightGoalPosition().getYCoOrdinate() * currSize];
 					goalSquare.setForeground(Color.BLACK);
@@ -205,6 +212,13 @@ public class KnightsPathApp extends SimpleAgentApp {
 					kSquare.setFont(f);
 					kSquare.setText("K");
 				}
+			}*/
+			
+			if(board.getKnightCurrentPosition() != null){
+				JButton kSquare = squareButtons[board.getKnightCurrentPosition().getXCoOrdinate() + board.getKnightCurrentPosition().getYCoOrdinate() * currSize];
+				kSquare.setForeground(Color.BLACK);
+				kSquare.setFont(f);
+				kSquare.setText("K");
 			}
 			
 			validate();
@@ -252,15 +266,18 @@ public class KnightsPathApp extends SimpleAgentApp {
 			KnightsPathBoard board = null;
 			switch (selState.getValue(KnightsPathFrame.ENV_SEL)) {
 			case 0: // 4 x 4 board
+				board = new KnightsPathBoard(4);
+				break;
+			case 1: // 6 x 6 board
 				board = new KnightsPathBoard(6);
 				break;
-			case 1: // 8 x 8 board
+			case 2: // 8 x 8 board
 				board = new KnightsPathBoard(8);
 				break;
-			case 2: // 8 x 8 board
+			case 3: // 8 x 8 board
 				board = new KnightsPathBoard(10);
 				break;
-			case 3: // 32 x 32 board
+			case 4: // 12 x 12 board
 				board = new KnightsPathBoard(12);
 				break;
 			}
@@ -288,9 +305,26 @@ public class KnightsPathApp extends SimpleAgentApp {
 				
 				ActionsFunction af = KnightsPathFunctionFactory.getActionsFunction();
 				
+				GoalTest goalTest;
+				
+				switch (sSel) {
+				case 0:
+					goalTest = new KnightsPathGoalTest();
+					break;
+				case 1:
+					goalTest = new KnightsPathGoalTestEuclidean();
+					break;
+				case 2:
+					goalTest = new KnightsPathGoalTestDiagonal();
+				default:
+					goalTest = new KnightsPathGoalTestEuclidean();
+					break;
+				}
+
+				
 				Problem problem = new Problem(env.getBoard(), af,
 						KnightsPathFunctionFactory.getResultFunction(),
-						new KnightsPathGoalTest());
+						goalTest);
 				
 				Search search = SEARCH_ALGOS.get(sSel);
 				agent = new SearchAgent(problem, search);
