@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 import javax.swing.JButton;
@@ -200,7 +199,7 @@ public class KnightsPathApp extends SimpleAgentApp {
 				goalSquare.setText("G");
 			}
 			
-			/*for (XYLocation locationVisited : board.getLocationsVisited()) {
+			for (XYLocation locationVisited : board.getLocationsVisited()) {
 				if(locationVisited.getXCoOrdinate() == board.getKnightGoalPosition().getXCoOrdinate() && locationVisited.getYCoOrdinate() == board.getKnightGoalPosition().getYCoOrdinate()){
 					JButton goalSquare = squareButtons[board.getKnightGoalPosition().getXCoOrdinate() + board.getKnightGoalPosition().getYCoOrdinate() * currSize];
 					goalSquare.setForeground(Color.BLACK);
@@ -212,14 +211,14 @@ public class KnightsPathApp extends SimpleAgentApp {
 					kSquare.setFont(f);
 					kSquare.setText("K");
 				}
-			}*/
+			}
 			
-			if(board.getKnightCurrentPosition() != null){
+			/*if(board.getKnightCurrentPosition() != null){
 				JButton kSquare = squareButtons[board.getKnightCurrentPosition().getXCoOrdinate() + board.getKnightCurrentPosition().getYCoOrdinate() * currSize];
 				kSquare.setForeground(Color.BLACK);
 				kSquare.setFont(f);
 				kSquare.setText("K");
-			}
+			}*/
 			
 			validate();
 		}
